@@ -6,7 +6,7 @@ import ProductList from "./ProductList";
 export default function CategoryList() {
   const [categories, setCategories] = useState([]);
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(2);
   
   const getCategoriesData = async () => {
     try {
