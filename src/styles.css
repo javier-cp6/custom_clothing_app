@@ -1,0 +1,29 @@
+.card-category {
+  min-height:300px;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+}
+
+.card-category .card-title{
+  text-decoration: none;
+  color:white;
+  font-size:30px;
+  position: absolute;
+  bottom:10px;
+}
+
+.filter-category{
+  background-image: linear-gradient(45deg, #198754, #000);
+  width:100%;
+  height:100%;
+  position:absolute;
+  top:0;
+  bottom:0;
+  opacity: 0.2;
+  transition: all 0.5s;
+}
+
+.card-category:hover .filter-category{
+  opacity: 0;
+}

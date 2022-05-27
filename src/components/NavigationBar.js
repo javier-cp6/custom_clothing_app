@@ -14,13 +14,13 @@ export default function NavigationBar() {
     const getCategoriesData = async () => {
       try {
         const arrCategories = await getCategories(page, limit);
-        setCategories(arrCategories);
+        setCategories([...categories, ...arrCategories]);
       } catch (error) {
         console.log(error);
       }
     };
     getCategoriesData();
-  }, []);
+  }, [page]);
 
   return (
     <>
