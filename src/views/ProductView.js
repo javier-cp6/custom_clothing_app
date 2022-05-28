@@ -16,8 +16,11 @@ export default function ProductView() {
 
   const { cartProds, addToCart } = useContext(CartContext)
 
-  const addProduct = () => {
+  const addProduct = (e) => {
+    e.preventDefault()
+    console.log(e)
     addToCart(product)
+    console.log(cartProds)
   }
 
   useEffect(() => {
@@ -54,7 +57,7 @@ export default function ProductView() {
           <div className="d-flex card-body justify-content-end">
             <button className="btn btn-danger ms-2 card-addfav">share*</button>
             {/* testing addProduct with fav button */}
-            <button className="btn btn-danger ms-2 card-addfav" onClick={addProduct}>+favs</button>
+            <button className="btn btn-danger ms-2 card-addfav" onClick= {(e) =>{addProduct(e)}}>+favs</button>
           </div>
           
           <div className="card-body">
@@ -66,14 +69,14 @@ export default function ProductView() {
             <p className="card-text card-price">$ {product.prod_price}</p>
           </div>
 
-          <form className="card-body">
+          <form className="card-body" onSubmit={addProduct}>
             <div className="d-flex justify-content-between mb-4">
               <label>Choose size:</label>
-              <div>
+              <select>
                 {product.prod_size.map((item, i) => (
-                  <button key={i} className="ms-2">{item}</button>
+                  <option key={i} className="ms-2">{item}</option>
                 ))}
-              </div>
+              </select>
             </div>
             <div className="d-flex justify-content-between mb-4">
               <label>Choose color:</label>
@@ -94,10 +97,29 @@ export default function ProductView() {
         </div>
       </div>
       <div>
-        <h2 className="text-center">Recommended products</h2>
+        <h2 className="text-center">We also recommend</h2>
       </div>
 
-      
+      <div>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Price</th>
+              <th>id</th>
+            </tr>
+          </thead>
+          <tbody>
+            {cartProds.map(({prod_name, prod_price, prod_id}, i) => (
+              <tr key={i}>
+                <td>{prod_name}</td>
+                <td>{prod_price}</td>
+                <td>{prod_id}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
