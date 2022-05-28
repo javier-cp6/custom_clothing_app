@@ -1,12 +1,24 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import { useParams, Link } from "react-router-dom"
 
 import { getProduct } from "../services/productService"
+
+import { CartContext } from "../context/cartContext"
 
 export default function ProductView() {
   const [ product, setProduct] = useState(null)
 
   const {catId, prodId} = useParams()
+
+
+  // const contexto = useContext(CartContext)
+  // console.log(contexto)
+
+  const { cartProds, addToCart } = useContext(CartContext)
+
+  const addProduct = () => {
+    addToCart(product)
+  }
 
   useEffect(() => {
     const getProductData = async () => {
@@ -31,7 +43,7 @@ export default function ProductView() {
         <div className="col-12 col-md-6 col-lg-6 mb-3">
           <div className="d-flex justify-content-center overflow-hidden">
             <img
-              className="img-detalle"
+              // className="img-fluid"
               src={product.prod_img}
               alt={product.prod_name}
             />
@@ -39,9 +51,10 @@ export default function ProductView() {
         </div>
 
         <div className="col-12 col-md-6 col-lg-6 ">
-          <div>
-            <button className="btn btn-danger card-addfav">share*</button>
-            <button className="btn btn-danger card-addfav">+favs</button>
+          <div className="d-flex card-body justify-content-end">
+            <button className="btn btn-danger ms-2 card-addfav">share*</button>
+            {/* testing addProduct with fav button */}
+            <button className="btn btn-danger ms-2 card-addfav" onClick={addProduct}>+favs</button>
           </div>
           
           <div className="card-body">
@@ -53,26 +66,35 @@ export default function ProductView() {
             <p className="card-text card-price">$ {product.prod_price}</p>
           </div>
 
-          <form>
-            <div>
+          <form className="card-body">
+            <div className="d-flex justify-content-between mb-4">
               <label>Choose size:</label>
-              {product.prod_size.map((item, i) => (
-                <button key={i}>{item}</button>
-              ))}
+              <div>
+                {product.prod_size.map((item, i) => (
+                  <button key={i} className="ms-2">{item}</button>
+                ))}
+              </div>
             </div>
-            <div>
+            <div className="d-flex justify-content-between mb-4">
               <label>Choose color:</label>
-              {product.prod_color.map((item, i) => (
-                <button key={i} style={{background: `${item}`}}>*</button>
-              ))}
+              <div>
+                {product.prod_color.map((item, i) => (
+                  <button key={i} className="ms-2" style={{background: `${item}`}}>*</button>
+                ))}
+              </div>
             </div>
-            <div>
+            <div className="d-flex justify-content-between mb-4">
               <label>Cantidad:</label>
-              <input type="number"></input>
+              <input type="number" min="1"></input>
             </div>
-            <input type="submit" value="Add to cart" className="btn btn-danger"/>
+            <div className="text-center">
+              <input type="submit" value="Add to cart" className="btn btn-danger"/>
+            </div>
           </form>
         </div>
+      </div>
+      <div>
+        <h2 className="text-center">Recommended products</h2>
       </div>
 
       
