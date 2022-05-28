@@ -10,8 +10,8 @@ export default function CategoryList() {
   
   const getCategoriesData = async () => {
     try {
-      const arrCategories = await getCategories(page, limit);
-      setCategories([...categories, ...arrCategories]);
+      const categoriesArr = await getCategories(page, limit);
+      setCategories([...categories, ...categoriesArr]);
     } catch (error) {
       console.log(error);
     }
@@ -44,10 +44,13 @@ export default function CategoryList() {
           </div>
         ))}
       </div>
-      <button className="btn btn-outline-success btn-sm" onClick={viewMore}>
-        View more
-      </button>
-      <ProductList />
+      <div className="text-center">
+        <button className="btn btn-outline-success btn-sm" onClick={viewMore}>
+          View more
+        </button>
+      </div>
+      <h1 className="text-center">Popular products</h1>
+      <ProductList categories={categories}/>
     </div>
   );
 }

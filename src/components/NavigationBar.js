@@ -33,7 +33,7 @@ export default function NavigationBar() {
       </Navbar>
       <Navbar bg="light" expand="sm" variant="light">
         <Container>
-          <Navbar.Brand className="fw-bold fs-4" href="#home">
+          <Navbar.Brand className="fw-bold fs-4" href="/">
             *LA CONSIGNE*
           </Navbar.Brand>
           <Form className="d-flex">
@@ -54,8 +54,8 @@ export default function NavigationBar() {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mx-auto">
               <Nav.Link href="#link">Creators</Nav.Link>
-              {categories.map(({ cat_name }, i) => (
-                <Nav.Link to="/" key={i}>
+              {categories.map(({ cat_name, cat_id }, i) => (
+                <Nav.Link href={`/category/${cat_id}`} key={i}>
                   {cat_name}
                 </Nav.Link>
               ))}
