@@ -72,17 +72,28 @@ export default function ProductView() {
           <form className="card-body" onSubmit={addProduct}>
             <div className="d-flex justify-content-between mb-4">
               <label>Choose size:</label>
-              <select>
+              <div className="d-flex" onChange={(e) => {console.log(e.target.value)}}>
                 {product.prod_size.map((item, i) => (
-                  <option key={i} className="ms-2">{item}</option>
+                  <div key={i}>
+                    
+                    <label className="btn btn-outline-dark">
+                      <input type="radio"  name="size" value={item} className="btn-check"/>
+                      {item}
+                    </label>
+                  </div>
                 ))}
-              </select>
+              </div>
             </div>
-            <div className="d-flex justify-content-between mb-4">
+            <div className="d-flex justify-content-between mb-4" onChange={(e) => {console.log(e.target.value)}}>
               <label>Choose color:</label>
-              <div>
+              <div className="d-flex">
                 {product.prod_color.map((item, i) => (
-                  <button key={i} className="ms-2" style={{background: `${item}`}}>*</button>
+                  <div key={i}>
+                    <label className="btn btn-outline-dark ms-2" style={{background: `${item}`, color: "transparent"}}>
+                      <input type="radio" name="color" value={item} className="btn-check ms-2"></input>
+                      {item}
+                    </label>
+                  </div>
                 ))}
               </div>
             </div>
