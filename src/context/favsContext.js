@@ -1,13 +1,21 @@
 import { useState, useEffect, createContext } from "react"
-import CartContextProvider from "./cartContext";
+import Swal from "sweetalert2"
 
 export const FavsContext = createContext()
 
 const FavsContextProvider = (props) => {
   const [ favs, setFavs ] = useState([])
 
+  // const updateFavs = (product) => {
+  //   setFavs([...favs, product])
+  // }
   const updateFavs = (product) => {
+    if(favs.filter((item) => item.prod_id === product.prod_id).length > 0) return
     setFavs([...favs, product])
+    Swal.fire({
+      icon:"success",
+      title:"Your selection was added to favorites!"
+    })
   }
 
   useEffect(() => {

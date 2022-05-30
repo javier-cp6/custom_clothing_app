@@ -10,6 +10,7 @@ import HomeView from "./views/HomeView";
 import CategoryView from "./views/CategoryView";
 import ProductView from "./views/ProductView";
 import CartView from "./views/CartView";
+import FavsView from "./views/FavsView";
 
 export default function App() {
   return (
@@ -23,6 +24,7 @@ export default function App() {
               <Route path="/category/:catId" element={<CategoryView />} />
               <Route path="/productdetails/:catId/:prodId" element={<ProductView />} />
               <Route path="/cart" element={<CartView />} />
+              <Route path="/favs" element={<FavsView />} />
               {/* <Route path="/favoritos" element={<ProtectedRoute><FavoritosView /></ProtectedRoute>} /> */}
               {/* <Route path="/login" element={<LoginView />} /> */}
             </Routes>

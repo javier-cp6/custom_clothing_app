@@ -1,6 +1,5 @@
 import { useState, useEffect, useContext } from "react"
 import { useParams, Link } from "react-router-dom"
-import Swal from "sweetalert2"
 
 import { getProduct } from "../services/productService"
 
@@ -9,7 +8,12 @@ import { FavsContext } from "../context/favsContext"
 
 export default function ProductView() {
   const [ product, setProduct] = useState(null)
-  const [ inputs, setInputs] = useState({})
+  const [ inputs, setInputs] = useState({
+    chosenSize: "M",
+    chosenColor: "black",
+    chosenQuantity: 1
+  })
+  console.log(inputs.chosenSize)
 
   const {catId, prodId} = useParams()
 
@@ -25,11 +29,11 @@ export default function ProductView() {
   const addToCart = (e) => {
     e.preventDefault()
     updateCart({...product, ...inputs})
-    Swal.fire({
-      icon:"success",
-      title:"Your selection was added to cart!"
-    })
+  }
 
+  const addToFavs = (e) => {
+    e.preventDefault()
+    updateFavs(product)
   }
 
   useEffect(() => {
@@ -65,7 +69,7 @@ export default function ProductView() {
         <div className="col-12 col-md-6 col-lg-6 ">
           <div className="d-flex card-body justify-content-end">
             <button className="btn btn-danger ms-2 card-addfav">share*</button>
-            <button className="btn btn-danger ms-2 card-addfav">+favs</button>
+            <button className="btn btn-danger ms-2 card-addfav" onClick={(e)=> {addToFavs(e)}}>+favs</button>
           </div>
 
           <div className="card-body">
@@ -83,7 +87,7 @@ export default function ProductView() {
               <div className="d-flex" onChange={(e) => {console.log(e.target.value)}}>
                 {product.prod_size.map((item, i) => (
                   <div key={i}>
-                    <input type="radio" id={`sizeId-${i}`} name="chosenSize" value={item} className="btn-check"
+                    <input type="radio" id={`sizeId-${i}`} name="chosenSize" value={item} className="btn-check" checked={inputs.chosenSize === item} required
                     onChange={(e) => {manageInputs(e)}}
                     />
                     <label className="btn btn-outline-dark ms-3" htmlFor={`sizeId-${i}`}
@@ -97,7 +101,7 @@ export default function ProductView() {
               <div className="d-flex" onChange={(e) => {console.log(e.target.value)}}>
                 {product.prod_color.map((item, i) => (
                   <div key={i}>
-                    <input type="radio" id={`colorId-${i}`} name="chosenColor" value={item} className="btn-check"
+                    <input type="radio" id={`colorId-${i}`} name="chosenColor" value={item} className="btn-check" checked={inputs.chosenColor === item} required
                     onChange={(e) => {manageInputs(e)}}
                     />
                     <label className="btn btn-outline-dark ms-3" htmlFor={`colorId-${i}`}
@@ -110,7 +114,7 @@ export default function ProductView() {
             </div>
             <div className="d-flex justify-content-between mb-4">
               <label>Quantity:</label>
-              <input type="number" min="1" name="chosenQuantity" onChange={(e) => {manageInputs(e)}}></input>
+              <input type="number" min="1" name="chosenQuantity" value={inputs.chosenQuantity} required onChange={(e) => {manageInputs(e)}}></input>
             </div>
             <div className="text-center">
               <input type="submit" value="Add to cart" className="btn btn-danger"/>
@@ -119,33 +123,8 @@ export default function ProductView() {
         </div>
       </div>
       <div>
-        <h2 className="text-center">We also recommend</h2>
+        <h1 className="text-center">We also recommend</h1>
       </div>
-
-      <div>
-        <h1 className="mb-4 text-center">Your order</h1>
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Price</th>
-              <th>id</th>
-            </tr>
-          </thead>
-          <tbody>
-            {favs.map((item, i) => (
-              <tr key={i}>
-                <td>{item.prod_name}</td>
-                <td>{item.prod_price}</td>
-                <td>{item.prod_id}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-
-
     </div>
   );
 }

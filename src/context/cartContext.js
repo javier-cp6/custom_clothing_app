@@ -1,4 +1,5 @@
 import { useState, useEffect, createContext } from "react"
+import Swal from "sweetalert2"
 
 export const CartContext = createContext()
 
@@ -7,6 +8,10 @@ const CartContextProvider = (props) => {
 
     const updateCart = (product) => {
       setCartProds([...cartProds, product])
+      Swal.fire({
+        icon:"success",
+        title:"Your selection was added to cart!"
+      })
     }
 
     useEffect(() => {
