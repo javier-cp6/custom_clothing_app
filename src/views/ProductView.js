@@ -5,6 +5,7 @@ import Swal from "sweetalert2"
 import { getProduct } from "../services/productService"
 
 import { CartContext } from "../context/cartContext"
+import { FavsContext } from "../context/favsContext"
 
 export default function ProductView() {
   const [ product, setProduct] = useState(null)
@@ -12,19 +13,18 @@ export default function ProductView() {
 
   const {catId, prodId} = useParams()
 
-  const { cartProds, updateCart } = useContext(CartContext)
+  const { updateCart } = useContext(CartContext)
+  const { favs, updateFavs } = useContext(FavsContext)
 
   const manageInputs = (e) => {
     setInputs({
       ...inputs, [e.target.name]: e.target.value,
     });
-    // console.log(inputs)
   }
 
   const addToCart = (e) => {
     e.preventDefault()
     updateCart({...product, ...inputs})
-    // console.log(cartProds)
     Swal.fire({
       icon:"success",
       title:"Your selection was added to cart!"
@@ -121,6 +121,31 @@ export default function ProductView() {
       <div>
         <h2 className="text-center">We also recommend</h2>
       </div>
+
+      <div>
+        <h1 className="mb-4 text-center">Your order</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Price</th>
+              <th>id</th>
+            </tr>
+          </thead>
+          <tbody>
+            {favs.map((item, i) => (
+              <tr key={i}>
+                <td>{item.prod_name}</td>
+                <td>{item.prod_price}</td>
+                <td>{item.prod_id}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+
+
     </div>
   );
 }
