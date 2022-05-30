@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from "react"
 import { useParams, Link } from "react-router-dom"
+import Swal from "sweetalert2"
 
 import { getProduct } from "../services/productService"
 
@@ -7,20 +8,28 @@ import { CartContext } from "../context/cartContext"
 
 export default function ProductView() {
   const [ product, setProduct] = useState(null)
+  const [ inputs, setInputs] = useState({})
 
   const {catId, prodId} = useParams()
 
+  const { cartProds, updateCart } = useContext(CartContext)
 
-  // const contexto = useContext(CartContext)
-  // console.log(contexto)
+  const manageInputs = (e) => {
+    setInputs({
+      ...inputs, [e.target.name]: e.target.value,
+    });
+    // console.log(inputs)
+  }
 
-  const { cartProds, addToCart } = useContext(CartContext)
-
-  const addProduct = (e) => {
+  const addToCart = (e) => {
     e.preventDefault()
-    console.log(e)
-    addToCart(product)
-    console.log(cartProds)
+    updateCart({...product, ...inputs})
+    // console.log(cartProds)
+    Swal.fire({
+      icon:"success",
+      title:"Your selection was added to cart!"
+    })
+
   }
 
   useEffect(() => {
@@ -56,10 +65,9 @@ export default function ProductView() {
         <div className="col-12 col-md-6 col-lg-6 ">
           <div className="d-flex card-body justify-content-end">
             <button className="btn btn-danger ms-2 card-addfav">share*</button>
-            {/* testing addProduct with fav button */}
-            <button className="btn btn-danger ms-2 card-addfav" onClick= {(e) =>{addProduct(e)}}>+favs</button>
+            <button className="btn btn-danger ms-2 card-addfav">+favs</button>
           </div>
-          
+
           <div className="card-body">
             <h2 className="card-title">
               {product.prod_name}
@@ -69,37 +77,40 @@ export default function ProductView() {
             <p className="card-text card-price">$ {product.prod_price}</p>
           </div>
 
-          <form className="card-body" onSubmit={addProduct}>
+          <form className="card-body" onSubmit={addToCart}>
             <div className="d-flex justify-content-between mb-4">
-              <label>Choose size:</label>
+              <div>Choose size:</div>
               <div className="d-flex" onChange={(e) => {console.log(e.target.value)}}>
                 {product.prod_size.map((item, i) => (
                   <div key={i}>
-                    
-                    <label className="btn btn-outline-dark">
-                      <input type="radio"  name="size" value={item} className="btn-check"/>
-                      {item}
-                    </label>
+                    <input type="radio" id={`sizeId-${i}`} name="chosenSize" value={item} className="btn-check"
+                    onChange={(e) => {manageInputs(e)}}
+                    />
+                    <label className="btn btn-outline-dark ms-3" htmlFor={`sizeId-${i}`}
+                    >{item}</label>
                   </div>
                 ))}
               </div>
             </div>
-            <div className="d-flex justify-content-between mb-4" onChange={(e) => {console.log(e.target.value)}}>
-              <label>Choose color:</label>
-              <div className="d-flex">
+            <div className="d-flex justify-content-between mb-4">
+              <p>Choose color:</p>
+              <div className="d-flex" onChange={(e) => {console.log(e.target.value)}}>
                 {product.prod_color.map((item, i) => (
                   <div key={i}>
-                    <label className="btn btn-outline-dark ms-2" style={{background: `${item}`, color: "transparent"}}>
-                      <input type="radio" name="color" value={item} className="btn-check ms-2"></input>
-                      {item}
+                    <input type="radio" id={`colorId-${i}`} name="chosenColor" value={item} className="btn-check"
+                    onChange={(e) => {manageInputs(e)}}
+                    />
+                    <label className="btn btn-outline-dark ms-3" htmlFor={`colorId-${i}`}
+                    style={{background:`${item}`, color: "transparent"}}
+                    >{item}
                     </label>
                   </div>
                 ))}
               </div>
             </div>
             <div className="d-flex justify-content-between mb-4">
-              <label>Cantidad:</label>
-              <input type="number" min="1"></input>
+              <label>Quantity:</label>
+              <input type="number" min="1" name="chosenQuantity" onChange={(e) => {manageInputs(e)}}></input>
             </div>
             <div className="text-center">
               <input type="submit" value="Add to cart" className="btn btn-danger"/>
@@ -109,27 +120,6 @@ export default function ProductView() {
       </div>
       <div>
         <h2 className="text-center">We also recommend</h2>
-      </div>
-
-      <div>
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Price</th>
-              <th>id</th>
-            </tr>
-          </thead>
-          <tbody>
-            {cartProds.map(({prod_name, prod_price, prod_id}, i) => (
-              <tr key={i}>
-                <td>{prod_name}</td>
-                <td>{prod_price}</td>
-                <td>{prod_id}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
       </div>
     </div>
   );

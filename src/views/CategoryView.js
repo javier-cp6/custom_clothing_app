@@ -28,7 +28,7 @@ export default function CategoryView() {
     <div className="row">
       <h1 className="mb-4 text-center">{category[0].cat_name}</h1>
         <div className="col-12 col-md-4">
-            {/* <CategoriasMenu /> */}
+            {/* <CategoriesMenu /> */}
         </div>
         <ProductList categories={category}/>
     </div>

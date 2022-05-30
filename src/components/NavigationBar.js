@@ -27,7 +27,7 @@ export default function NavigationBar() {
       <Navbar bg="light" expand="sm" variant="light">
         <Container className="justify-content-end">
           <Button variant="dark ms-2">Favs</Button>
-          <Button variant="dark ms-2">Cart</Button>
+          <Button href={`/cart`} variant="dark ms-2">Cart</Button>
           <Button variant="dark ms-2">Login</Button>
         </Container>
       </Navbar>
