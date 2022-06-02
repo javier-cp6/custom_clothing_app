@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 
 import { getCategories } from "../services/categoryService";
 
+import main_logo from "../img/main_logo.jpg"
+
 export default function NavigationBar() {
   const [categories, setCategories] = useState([]);
   const [page, setPage] = useState(1);
@@ -34,7 +36,7 @@ export default function NavigationBar() {
       <Navbar bg="light" expand="sm" variant="light">
         <Container>
           <Navbar.Brand className="fw-bold fs-4" href="/">
-            *LA CONSIGNE*
+            <img src={main_logo} className="main-logo" alt="la consigne logo"></img>
           </Navbar.Brand>
           <Form className="d-flex">
             <FormControl

@@ -1,3 +1,7 @@
+.main-logo {
+  max-height:80px;
+}
+
 .card-category {
   min-height:300px;
   position: relative;
