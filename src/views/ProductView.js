@@ -68,14 +68,13 @@ export default function ProductView() {
 
         <div className="col-12 col-md-6 col-lg-6 ">
           <div className="d-flex card-body justify-content-end">
-            <button className="btn btn-danger ms-2 card-addfav">share*</button>
-            <button className="btn btn-danger ms-2 card-addfav" onClick={(e)=> {addToFavs(e)}}>+favs</button>
+            <button className="btn btn-danger ms-2 card-addfav"><i class="fa-solid fa-share-nodes"></i></button>
+            <button className="btn btn-danger ms-2 card-addfav" onClick={(e)=> {addToFavs(e)}}><i className="fa-solid fa-heart"></i></button>
           </div>
 
           <div className="card-body">
             <h2 className="card-title">
               {product.prod_name}
-              <span>{`__catId=${product.categoryId}`}</span>
             </h2>
             <p className="card-text">by {product.prod_designer}</p>
             <p className="card-text card-price">$ {product.prod_price}</p>
@@ -100,11 +99,11 @@ export default function ProductView() {
               <p>Choose color:</p>
               <div className="d-flex" onChange={(e) => {console.log(e.target.value)}}>
                 {product.prod_color.map((item, i) => (
-                  <div key={i}>
-                    <input type="radio" id={`colorId-${i}`} name="chosenColor" value={item} className="btn-check" checked={inputs.chosenColor === item} required
+                  <div key={i} >
+                    <input type="radio" id={`colorId-${i}`} name="chosenColor" value={item} className="btn-check " checked={inputs.chosenColor === item} required
                     onChange={(e) => {manageInputs(e)}}
                     />
-                    <label className="btn btn-outline-dark ms-3" htmlFor={`colorId-${i}`}
+                    <label className="btn btn-outline-dark ms-3 btn-color-label" htmlFor={`colorId-${i}`}
                     style={{background:`${item}`, color: "transparent"}}
                     >{item}
                     </label>

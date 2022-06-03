@@ -69,7 +69,7 @@ export default function NavigationBar() {
             <ul className="navbar-nav mx-auto d-md-flex flex-wrap justify-content-center d-md-none d-lg-none d-xl-none">
               {categories.map(({ cat_name, cat_id }, i) => (
                 <li className="nav-cat nav-item mx-md-1 mx-lg-2 " key={i}>
-                  <a className="nav-link" aria-current="page" href={`/category/${cat_id}`}>xx{cat_name}</a>
+                  <a className="nav-link" aria-current="page" href={`/category/${cat_id}`}>{cat_name}</a>
                 </li>
               ))}
               { categories.length === 0 ? null : (
