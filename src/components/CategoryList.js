@@ -31,7 +31,7 @@ export default function CategoryList() {
         {categories.map(({ cat_name, cat_img, cat_id }, i) => (
           <div className="col-6 col-md-6 col-lg-3" key={i}>
             <Link
-              className="card mb-3 card-category"
+              className="card text-center mb-3 card-category"
               style={{backgroundImage: `url(${cat_img})`}}
               to={`/category/${cat_id}`}
             >
@@ -44,12 +44,15 @@ export default function CategoryList() {
           </div>
         ))}
       </div>
+      { categories.length === 4 ? null : (
       <div className="text-center">
-        <button className="btn btn-outline-success btn-sm" onClick={viewMore}>
+        <button className="btn btn-dark btn-sm" onClick={viewMore}>
           View more
         </button>
       </div>
-      <h1 className="text-center">Popular products</h1>
+      )}
+
+      <h1 className="text-center mt-2 mb-3">Popular products</h1>
       <ProductList categories={categories}/>
     </div>
   );

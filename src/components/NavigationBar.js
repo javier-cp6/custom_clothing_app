@@ -50,14 +50,14 @@ export default function NavigationBar() {
               )}
             </ul>
           </div>
-          <div className="d-flex justify-content-end col-4 col-sm-5 col-md-auto col-lg-2">
-            <Link className="btn-icon btn mx-1" to={`/favs`}>
+          <div className="d-flex justify-content-end col-4 col-sm-5 col-md-auto col-lg-2 flex-grow-1">
+            <Link className="link-btn-icon btn mx-1" to={`/favs`}>
               <i className="fa-regular fa-heart"></i>
             </Link>
-            <Link className="btn-icon btn mx-1" to={`/cart`}>
+            <Link className="link-btn-icon btn mx-1" to={`/cart`}>
               <i className="fa-solid fa-cart-shopping"></i>
             </Link>
-            <Link className="btn-icon btn mx-1" to={`/login`}>
+            <Link className="link-btn-icon btn mx-1" to={`/login`}>
               <i className="fa-regular fa-circle-user"></i>
             </Link>
           </div>

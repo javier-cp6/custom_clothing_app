@@ -17,7 +17,7 @@ export default function ProductList({categories}) {
               alt={prod_name}
             />
             <div className="card-body">
-              <h5 className="card-title">{prod_name}<span>{`__catId=${categoryId}`}</span></h5>
+              <h5 className="card-title">{prod_name}</h5>
               <p className="card-text">by {prod_designer}</p>
               <p className="card-text card-price">$    {prod_price}</p>
             </div>
