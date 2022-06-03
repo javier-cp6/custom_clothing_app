@@ -1,6 +1,7 @@
+import "bootstrap/dist/js/bootstrap.min.js";
+
 import { useState, useEffect } from "react";
 
-import { Container, Navbar, Nav, Button, Form, FormControl} from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 import { getCategories } from "../services/categoryService";
@@ -26,45 +27,68 @@ export default function NavigationBar() {
 
   return (
     <>
-      <Navbar bg="light" expand="sm" variant="light">
-        <Container className="justify-content-end">
-          <Button href={`/favs`}variant="dark ms-2">Favs</Button>
-          <Button href={`/cart`} variant="dark ms-2">Cart</Button>
-          <Button variant="dark ms-2">Login</Button>
-        </Container>
-      </Navbar>
-      <Navbar bg="light" expand="sm" variant="light">
-        <Container>
-          <Navbar.Brand className="fw-bold fs-4" href="/">
-            <img src={main_logo} className="main-logo" alt="la consigne logo"></img>
-          </Navbar.Brand>
-          <Form className="d-flex">
-            <FormControl
-              type="search"
-              placeholder="Search"
-              className="me-2"
-              aria-label="Search"
-            />
-            <Button variant="dark">Search</Button>
-          </Form>
-        </Container>
-      </Navbar>
+      <nav className="navbar navbar-expand-md navbar-light bg-light">
+          
+        <div className="container-fluid d-flex col-12">
+          <Link className="div-img-logo d-flex col-auto" to="/">
+            <img className="img-logo navbar-brand" src={main_logo} alt="la consigne logo"></img>
+          </Link>
+          {/* <div> */}
 
-      <Navbar bg="light" expand="sm" variant="light">
-        <Container>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="mx-auto">
-              <Nav.Link href="#link">Creators</Nav.Link>
-              {categories.map(({ cat_name, cat_id }, i) => (
-                <Nav.Link href={`/category/${cat_id}`} key={i}>
-                  {cat_name}
-                </Nav.Link>
-              ))}
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+          <div className="d-flex flex-wrap">
+            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span className="navbar-toggler-icon"></span>
+            </button>
+            <div className="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul className="navbar-nav mx-auto d-flex flex-wrap justify-content-center">
+                {categories.map(({ cat_name, cat_id }, i) => (
+                  <li className="nav-cat nav-item me-4" key={i}>
+                    <a className="nav-link" aria-current="page" href={`/category/${cat_id}`}>{cat_name}</a>
+                  </li>
+                ))}
+                { categories.length === 0 ? null : (
+                  <li className="nav-cat nav-item">
+                    <a className="nav-link" aria-current="page" href="/">Creators</a>
+                  </li>
+                )}
+              </ul>
+            </div>
+          </div>
+          <div className="d-flex justify-content-end col-auto mb-0">
+              <Link className="btn ms-2" to={`/favs`}>
+                <i className="fa-regular fa-heart"></i>
+              </Link>
+              <Link className="btn ms-2" to={`/cart`}>
+                <i className="fa-solid fa-cart-shopping"></i>
+              </Link>
+              <Link className="btn ms-2" to={`/login`}>
+                <i className="fa-regular fa-circle-user"></i>
+              </Link>
+            </div>
+
+          {/* <div className="container d-flex flex-wrap col-md-3">
+           
+
+            <form className="d-flex justify-content-end col-12">
+              <input
+                type="search"
+                placeholder="Find our products"
+                className="form-control"
+                aria-label="Search"
+              />
+              <button className="btn ms-2">
+                <i className="fa-solid fa-magnifying-glass"></i>
+              </button>
+            </form>
+
+          </div> */}
+            
+          
+        </div>
+      </nav>
+      
+      
+
     </>
   );
 }

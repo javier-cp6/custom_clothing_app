@@ -1,7 +1,22 @@
-.main-logo {
-  max-height:80px;
+.div-img-logo {
+  max-height:50px;
+}
+.img-logo {
+  max-height:100px;
+  max-width: 100%;
+
+  object-fit: cover;
+  border: 3px solid black;
+  border-radius: 5px;
 }
 
+.nav-cat  {
+  font-size: 16px;
+}
+
+i {
+  font-size: 20px;
+}
 .card-category {
   min-height:300px;
   position: relative;
