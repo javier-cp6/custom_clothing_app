@@ -1,10 +1,11 @@
 import "bootstrap/dist/js/bootstrap.min.js";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 
 import { Link } from "react-router-dom";
 
 import { getCategories } from "../services/categoryService";
+import { AuthContext } from "../context/authContext";
 
 import main_logo from "../img/main_logo.jpg"
 
@@ -12,6 +13,8 @@ export default function NavigationBar() {
   const [categories, setCategories] = useState([]);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
+
+  const { user, signInWithGoogle, signOutFromGoogle } = useContext(AuthContext)
 
   useEffect(() => {
     const getCategoriesData = async () => {
@@ -57,9 +60,27 @@ export default function NavigationBar() {
             <Link className="link-btn-icon btn mx-1" to={`/cart`}>
               <i className="fa-solid fa-cart-shopping"></i>
             </Link>
-            <Link className="link-btn-icon btn mx-1" to={`/login`}>
-              <i className="fa-regular fa-circle-user"></i>
-            </Link>
+            {user ? (
+              <button className="link-btn-icon btn mx-1" onClick={signOutFromGoogle}>
+                <i className="fa-solid fa-right-from-bracket"></i>
+              </button>
+
+              // <div className="dropdown">
+
+              //   <a className="dropdown-toggle link-btn-icon btn mx-1" id="navbarDropdownMenuLink" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              //     <i className="fa-regular fa-circle-user"></i>
+              //   </a>
+              //   <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              //     <li className="dropdown-item"> 
+              //       <button className="btn btn-danger" onClick={signOutFromGoogle}>logout</button>
+              //     </li>
+              //   </ul>
+              // </div>
+            ) : (
+              <Link className="link-btn-icon btn mx-1" to={`/login`}>
+                <i className="fa-regular fa-circle-user"></i>
+              </Link>
+            )}
           </div>
 
           <button className="navbar-toggler d-md-none col-auto col-sm-1" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
