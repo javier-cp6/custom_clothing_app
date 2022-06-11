@@ -10,7 +10,7 @@ const CartContextProvider = (props) => {
       setCartProds([...cartProds, product])
       Swal.fire({
         icon:"success",
-        title:"Your selection was added to cart!"
+        title:"Your selection was added to your cart!"
       })
     }
 

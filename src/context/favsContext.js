@@ -14,7 +14,7 @@ const FavsContextProvider = (props) => {
     setFavs([...favs, product])
     Swal.fire({
       icon:"success",
-      title:"Your selection was added to favorites!"
+      title:"Your selection was added to your favorites!"
     })
   }
 
