@@ -1,10 +1,14 @@
 import { useState, useEffect, useContext } from "react"
-import { useParams, Link } from "react-router-dom"
+import { useParams } from "react-router-dom"
 
 import { getProduct } from "../services/productService"
+import { getCategoryById } from "../services/categoryService"
 
 import { CartContext } from "../context/cartContext"
 import { FavsContext } from "../context/favsContext"
+
+import ProductList from "../components/ProductList"
+
 
 export default function ProductView() {
   const [ product, setProduct] = useState(null)
@@ -13,7 +17,8 @@ export default function ProductView() {
     chosenColor: "black",
     chosenQuantity: 1
   })
-  console.log(inputs.chosenSize)
+  // console.log(inputs.chosenSize)
+  const [ category, setCategory ] = useState([])
 
   const {catId, prodId} = useParams()
 
@@ -48,6 +53,18 @@ export default function ProductView() {
     getProductData()
   },[])
 
+  useEffect(() => {
+    const getCategory = async () => {
+      try {
+        const categoryData = await getCategoryById(catId)
+        setCategory([...category, categoryData])
+      } catch (error) {
+        throw error
+      }
+    }
+    getCategory()
+  }, [catId])
+
   if(!product) {
     return <h4 className="text-center">Hold on... I'm thinking :p</h4>
   }
@@ -68,7 +85,7 @@ export default function ProductView() {
 
         <div className="col-12 col-md-6 col-lg-6 ">
           <div className="d-flex card-body justify-content-end">
-            <button className="btn btn-danger ms-2 card-addfav"><i class="fa-solid fa-share-nodes"></i></button>
+            <button className="btn btn-danger ms-2 card-addfav"><i className="fa-solid fa-share-nodes"></i></button>
             <button className="btn btn-danger ms-2 card-addfav" onClick={(e)=> {addToFavs(e)}}><i className="fa-solid fa-heart"></i></button>
           </div>
 
@@ -83,7 +100,7 @@ export default function ProductView() {
           <form className="card-body" onSubmit={addToCart}>
             <div className="d-flex justify-content-between mb-4">
               <div>Choose size:</div>
-              <div className="d-flex" onChange={(e) => {console.log(e.target.value)}}>
+              <div className="d-flex" /*onChange={(e) => {console.log(e.target.value)}}*/>
                 {product.prod_size.map((item, i) => (
                   <div key={i}>
                     <input type="radio" id={`sizeId-${i}`} name="chosenSize" value={item} className="btn-check" checked={inputs.chosenSize === item} required
@@ -97,7 +114,7 @@ export default function ProductView() {
             </div>
             <div className="d-flex justify-content-between mb-4">
               <p>Choose color:</p>
-              <div className="d-flex" onChange={(e) => {console.log(e.target.value)}}>
+              <div className="d-flex" /*onChange={(e) => {console.log(e.target.value)}}*/>
                 {product.prod_color.map((item, i) => (
                   <div key={i} >
                     <input type="radio" id={`colorId-${i}`} name="chosenColor" value={item} className="btn-check " checked={inputs.chosenColor === item} required
@@ -124,6 +141,7 @@ export default function ProductView() {
       <div>
         <h1 className="text-center">We also recommend</h1>
       </div>
+      <ProductList categories={category}/>
     </div>
   );
 }
