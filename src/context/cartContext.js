@@ -14,6 +14,10 @@ const CartContextProvider = (props) => {
       })
     }
 
+    const removeFromCart = (products) => {
+      setCartProds(products)
+    }
+
     useEffect(() => {
       const cartStorage = JSON.parse(localStorage.getItem("cart_products"))
       if(cartStorage){
@@ -27,7 +31,7 @@ const CartContextProvider = (props) => {
     }, [cartProds])
 
     return (
-      <CartContext.Provider value={{cartProds, updateCart }} >
+      <CartContext.Provider value={{cartProds, updateCart, removeFromCart }} >
           {props.children}
       </CartContext.Provider>
     )

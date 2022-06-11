@@ -1,9 +1,29 @@
 import { useContext } from "react"
+import { useNavigate } from "react-router-dom";
 import { CartContext } from "../context/cartContext"
+import { AuthContext } from '../context/authContext'
 
 export default function CartView() {
-  const { cartProds } = useContext(CartContext)
-  
+  const { cartProds, removeFromCart } = useContext(CartContext)
+  const { user } = useContext(AuthContext)
+
+  const navigate = useNavigate()
+
+  const removeItem = (e, i) => {
+    e.preventDefault()
+    let cartTmp = [...cartProds]
+    cartTmp.splice(i,1)
+    removeFromCart(cartTmp)
+  }
+
+  const buyNow = () => {
+    if(user){
+      navigate('/')
+    }else{
+      navigate('/login')
+    }
+  }
+
   return (
     /*
     <div>
@@ -47,24 +67,24 @@ export default function CartView() {
     <div>
       <h1 className="mb-4 text-center">Your order</h1>
       <div className="row">
-        <div className="d-flex flex-wrap text-center">
-          <div className="col-6 col-md-3">Design</div>
-          <div className="col-6 col-md-6">Product</div>
-          <div className="col-2 col-md-3">Quantity</div>
+        <div className="d-flex flex-wrap mb-2 text-center border-bottom fw-bold">
+          <div className="col-6 col-md-3 d-none d-sm-none d-md-block">Product</div>
+          <div className="col-12 col-md-6">Details</div>
+          <div className="col-2 col-md-3 d-none d-sm-none d-md-block">Quantity</div>
         </div>
         <div>
           {cartProds.map((item, i) => (
-            <div key={i} className="d-flex flex-wrap mb-2 border-bottom">
+            <div key={i} className="d-flex flex-wrap mb-2 pb-2 border-bottom">
               <div className="col-12 col-md-3 text-center">
                 <img src={item.prod_img} alt={item.prod_name} className="cart-img"/>
               </div>
-              <div className="d-flex flex-wrap col-12 col-md-6 align-items-md-center">
+              <div className="d-flex flex-wrap col-12 col-md-6 align-items-center">
                 <h5 className="col-12">{item.prod_name}</h5>
                 <div className="col-12">SKU ID: {item.prod_id}</div>
                 <div className="d-flex col-12">
                   <div className="me-3">Size: {item.chosenSize}</div>
                   <div className="me-3">Color: {item.chosenColor}</div>
-                  <button className="me-3">Remove</button>
+                  <button className="btn btn-link p-0" onClick={(e) => {removeItem(e, i)}}>Remove</button>
                 </div>
               </div>
               <div className="d-flex flex-wrap col-12 col-md-3 text-center align-items-center">
@@ -77,6 +97,16 @@ export default function CartView() {
               </div>
             </div>
           ))}
+        </div>
+        {/* <div className="d-flex flex-wrap mb-2 text-center border-bottom fw-bold"> */}
+          {/* <div className="col-12 col-md-8">Total</div> */}
+          {/* <div className="col-6 col-md-2">## items</div> */}
+          {/* <div className="col-6 col-md-2">$ 100</div> */}
+        {/* </div> */}
+        <div className="text-center">
+          <button className="btn btn-dark btn-sm" onClick={buyNow}>
+            Buy now
+          </button>
         </div>
       </div>
     </div>
