@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from "react"
 import { useParams } from "react-router-dom"
+import { useRef } from "react"
 
 import { getProduct } from "../services/productService"
 import { getCategoryById } from "../services/categoryService"
@@ -25,6 +26,8 @@ export default function ProductView() {
   const { updateCart } = useContext(CartContext)
   const { favs, updateFavs } = useContext(FavsContext)
 
+  const myRef = useRef(null)
+
   const manageInputs = (e) => {
     setInputs({
       ...inputs, [e.target.name]: e.target.value,
@@ -41,6 +44,8 @@ export default function ProductView() {
     updateFavs(product)
   }
 
+  const executeScroll = () => myRef.current.scrollIntoView()    
+
   useEffect(() => {
     const getProductData = async () => {
       try {
@@ -50,8 +55,13 @@ export default function ProductView() {
         throw error
       }
     }
+    // window.scrollTo(0, 0);
+    if(myRef.current !== null) {
+      // console.log(myRef)
+      executeScroll()
+    }
     getProductData()
-  },[])
+  },[catId, prodId])
 
   useEffect(() => {
     const getCategory = async () => {
@@ -72,7 +82,7 @@ export default function ProductView() {
 
   return (
     <div>
-      <div className="row mt-4">
+      <div ref={myRef} className="row mt-4">
         <div className="col-12 col-md-6 col-lg-6 mb-3">
           <div className="d-flex justify-content-center overflow-hidden">
             <img

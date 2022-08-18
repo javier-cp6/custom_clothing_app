@@ -26,8 +26,11 @@ const CartContextProvider = (props) => {
     }, [])
 
     useEffect(() => {
-      if(cartProds.length === 0) return
-      localStorage.setItem("cart_products", JSON.stringify(cartProds))
+      if(cartProds.length === 0) {
+        localStorage.removeItem("cart_products")
+      } else {
+        localStorage.setItem("cart_products", JSON.stringify(cartProds))
+      }
     }, [cartProds])
 
     return (
