@@ -5,6 +5,7 @@ import { getCategoryById } from "../services/categoryService"
 
 export default function CategoryView() {
   const [ category, setCategory ] = useState([])
+  const [ errors, setErrors ] = useState([])
 
   const {catId} = useParams()
 
@@ -14,12 +15,16 @@ export default function CategoryView() {
         const categoryData = await getCategoryById(catId)
         setCategory([...category, categoryData])
       } catch (error) {
+        setErrors([...errors, error])
         throw error
       }
     }
     getCategory()
   }, [catId])
 
+  if(errors.length !== 0) {
+    return <h4 className="text-center">The page you requested was not found</h4>
+  }
   if(category.length === 0) {
     return <h4 className="text-center">Hold on... I'm thinking :p</h4>
   }

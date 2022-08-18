@@ -20,6 +20,7 @@ export default function ProductView() {
   })
   // console.log(inputs.chosenSize)
   const [ category, setCategory ] = useState([])
+  const [ errors, setErrors ] = useState([])
 
   const {catId, prodId} = useParams()
 
@@ -52,6 +53,7 @@ export default function ProductView() {
         const productData = await getProduct(catId, prodId)
         setProduct(productData)
       } catch (error) {
+        setErrors([...errors, error])
         throw error
       }
     }
@@ -69,12 +71,16 @@ export default function ProductView() {
         const categoryData = await getCategoryById(catId)
         setCategory([...category, categoryData])
       } catch (error) {
+        setErrors([...errors, error])
         throw error
       }
     }
     getCategory()
   }, [catId])
 
+  if(errors.length !== 0) {
+    return <h4 className="text-center">The page you requested was not found</h4>
+  }
   if(!product) {
     return <h4 className="text-center">Hold on... I'm thinking :p</h4>
   }
