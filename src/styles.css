@@ -107,6 +107,33 @@
 
 }
 
+.card-product .btn-card-buyfav{
+  top:5px;
+  right: 5px;
+  position:absolute;
+  width: 30px;
+  height: 30px;
+  padding: 0px;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.btn-card-buyfav i {
+  font-size: 18px;
+}
+.card-product .btn-card-remfav{
+  bottom: 15px;
+  right: 5px;
+  position:absolute;
+  padding: 0px;
+  z-index: 1;
+}
+.btn-card-remfav i {
+  font-size: 18px;
+  color: grey;
+}
+
 input[type="radio"]:checked + label{
   box-shadow: 0 0 0 3px grey;
 }

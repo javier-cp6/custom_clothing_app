@@ -18,6 +18,10 @@ const FavsContextProvider = (props) => {
     })
   }
 
+  const removeFromFavs = (products) => {
+    setFavs(products)
+  }
+
   useEffect(() => {
     const favsStorage = JSON.parse(localStorage.getItem("fav_products"))
     if(favsStorage){
@@ -26,12 +30,15 @@ const FavsContextProvider = (props) => {
   }, [])
 
   useEffect(() => {
-    if(favs.length === 0) return
+    if(favs.length === 0) {
+      localStorage.removeItem("fav_products")
+    } else {
     localStorage.setItem("fav_products", JSON.stringify(favs))
+    }
   }, [favs])
 
   return (
-    <FavsContext.Provider value={{ favs, updateFavs }}>
+    <FavsContext.Provider value={{ favs, updateFavs, removeFromFavs }}>
       {props.children}
     </FavsContext.Provider>
   )
